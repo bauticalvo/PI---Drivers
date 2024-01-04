@@ -8,8 +8,8 @@ module.exports = (sequelize) => {
       primaryKey: true,
     },
     name: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       allowNull: false,
     },
-  },{ timestamps: false });
+  },{ timestamps: false,  freezeTableName: true  });
 };
