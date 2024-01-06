@@ -1,8 +1,9 @@
-const {getDrivers, postDrivers, getDriversId} =require('../controllers/controllers')
+const {getDrivers,getDriversName, postDrivers, getDriversId} =require('../controllers/driverController')
 
 const getDriversHandler = async(req,res) =>{
     try {
-        const response = await getDrivers()
+        const {name} = req.query
+        const response = await getDrivers(name)
         res.status(200).json(response)
     } catch (error) {
     return res.status(400).json({message: error.message})
@@ -18,15 +19,17 @@ const getDriversIdHandler = async(req,res) =>{
         return res.status(400).json({message: error.message})
     }
 }
-/*
+
 const getDriversNameHandler = async(req,res) =>{
     try {
-            
+        const {name} = req.query
+        const response = getDriversName(name)
+        res.status(200).json(response)
     } catch (error) {
         return res.status(400).json({message: error.message})
     }
 }
-*/
+
 const postDriversHandler = async(req, res) =>{
     try {
         const {forename, surname,image, dob, nationality, 
@@ -40,4 +43,5 @@ const postDriversHandler = async(req, res) =>{
 }
 
 
-module.exports = {getDriversHandler, postDriversHandler, getDriversIdHandler}
+module.exports = {getDriversHandler, getDriversNameHandler,
+    postDriversHandler, getDriversIdHandler}

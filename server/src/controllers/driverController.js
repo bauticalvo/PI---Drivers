@@ -13,16 +13,23 @@ const getDriversAPI = async()=>{
     return data;
 }
 
-const getDrivers =async () =>{    
+const getDrivers =async (name) =>{    
     const driversDB = await getDriversDB();
     const driversApi = await getDriversAPI();
-    const allDrivers = [...driversDB, ...driversApi] //se puede cambiar el orden por como se muestra
+    const allDrivers = [...driversDB, ...driversApi] //se puede cambiar el orden
 
     allDrivers.forEach(async driver=>{
         if(!driver.image){
             driver.image = defaultImage;
         }
     })
+    if(name){
+        const driver = allDrivers.filter(driver => 
+            driver.name.forename.toLowerCase().includes(name.toLowerCase())
+            )
+        return driver.splice(0,15);
+    }
+    
     return allDrivers;
 }
 
@@ -37,16 +44,26 @@ const getDrivers =async () =>{
         return filteredDrivers;
 }
 
+const getDriversName = async (name)=>{
+    const allDrivers = getDrivers();
+    if(name){
+        const driver = allDrivers.filter(driver => 
+            driver.name.forename.toLowerCase().include(name.toLowerCase())
+            )
+        return driver.splice(0,15);
+    }
+}
+    
+
 const postDrivers = async(forename, surname, image, dob, nationality, 
      description)=>{
-
+       
         const driver = await Driver.findOrCreate({where: {
              forename, surname, image, dob, nationality, 
          description
         }})
         return driver;
-   
-
+        
 }
 
-module.exports = {getDrivers, postDrivers, getDriversId} ; 
+module.exports = {getDrivers, getDriversId, getDriversName, postDrivers} ; 
