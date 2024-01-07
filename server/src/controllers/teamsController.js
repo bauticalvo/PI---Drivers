@@ -14,9 +14,10 @@ const getTeams = async() =>{
         teams.forEach(async (teams) => 
            await Teams.findOrCreate({where: {name: teams}})
             )
-        
+        console.log('Teams cargados en la base de datos');
         return teams;
     }
+        console.log('Teams encontrados en la base de datos');
      return dbTeams.map(teams => teams.name)
 }
 

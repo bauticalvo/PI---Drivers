@@ -33,9 +33,9 @@ const getDriversNameHandler = async(req,res) =>{
 const postDriversHandler = async(req, res) =>{
     try {
         const {forename, surname,image, dob, nationality, 
-            description } = req.body;
+            description, teams } = req.body;
         const response = await postDrivers(forename, surname,image, dob, nationality, 
-             description);
+             description, teams);
         res.status(200).json(response);
     } catch (error) {
         return res.status(400).json({message: error.message})
